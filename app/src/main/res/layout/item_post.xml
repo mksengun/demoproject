@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true">
+
+
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:fontFamily="sans-regular"
+        android:paddingLeft="16dp"
+        android:paddingTop="20dp"
+        android:textColor="@color/black87"
+        android:textSize="@dimen/textSize_subhead" />
+
+    <TextView
+        android:id="@+id/textViewBody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewTitle"
+        android:fontFamily="sans-regular"
+        android:paddingBottom="20dp"
+        android:paddingLeft="16dp"
+        android:textSize="@dimen/textSize_body" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_below="@+id/textViewBody"
+        android:background="@color/black20" />
+
+
+</RelativeLayout><!-- https://material.io/guidelines/components/lists.html#lists-specs -->
