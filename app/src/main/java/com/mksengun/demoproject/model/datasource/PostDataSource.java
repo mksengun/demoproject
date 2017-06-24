@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.mksengun.demoproject.model.Post;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -19,7 +20,7 @@ public interface PostDataSource {
      */
     interface GetPostListCallback {
 
-        void onPostListLoaded(ArrayList<Post> dataArrayList);
+        void onPostListLoaded(List<Post> dataArrayList);
         void onDataNotAvailable();
 
     }
@@ -43,7 +44,7 @@ public interface PostDataSource {
     /**
      * This method will be used for getting single post.
      */
-    void getPost(@NonNull int postId, @NonNull GetPostListCallback callback);
+    void getPost(@NonNull int postId, @NonNull GetPostCallback callback);
 
 
 }

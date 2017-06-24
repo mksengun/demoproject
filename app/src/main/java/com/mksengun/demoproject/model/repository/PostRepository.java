@@ -8,7 +8,10 @@ import com.mksengun.demoproject.model.datasource.PostDataSource;
 import com.mksengun.demoproject.model.local.PostLocalDataSource;
 import com.mksengun.demoproject.model.remote.PostRemoteDataSource;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.List;
+
+import io.realm.Realm;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -48,36 +51,35 @@ public class PostRepository implements PostDataSource {
         return INSTANCE;
     }
 
-    /**
-     * Used to force {@link #getInstance(PostRemoteDataSource, PostLocalDataSource)} to create a new instance
-     * next time it's called.
-     */
-    public static void destroyInstance() {
-        INSTANCE = null;
-    }
 
+    /**
+     * This method asks remote repository for post list. If data comes from remote, then locale data
+     * will be updated and returned via callback. If remote fails then goes for local data and returns
+     * via callback.
+     *
+     * @param callback
+     */
     @Override
     public void getPostList(@NonNull final GetPostListCallback callback) {
         checkNotNull(callback);
 
         mPostRemoteDataSource.getPostList(new GetPostListCallback() {
             @Override
-            public void onPostListLoaded(ArrayList<Post> dataArrayList) {
-                callback.onPostListLoaded(dataArrayList);
+            public void onPostListLoaded(List<Post> dataList) {
+                mPostLocalDataSource.setPostList(dataList);
+                callback.onPostListLoaded(dataList);
             }
 
             @Override
             public void onDataNotAvailable() {
                 mPostLocalDataSource.getPostList(new GetPostListCallback() {
                     @Override
-                    public void onPostListLoaded(ArrayList<Post> dataArrayList) {
-                        Log.i(TAG, "onResponse");
-                        callback.onPostListLoaded(dataArrayList);
+                    public void onPostListLoaded(List<Post> dataList) {
+                        callback.onPostListLoaded(dataList);
                     }
 
                     @Override
                     public void onDataNotAvailable() {
-                        Log.e(TAG, "onDataNotAvailable");
                         callback.onDataNotAvailable();
                     }
                 });
@@ -86,8 +88,50 @@ public class PostRepository implements PostDataSource {
 
     }
 
+    /**
+     * This method asks remote repository for single post. If data comes from remote, then locale data
+     * will be updated and returned via callback. If remote fails then goes for local data and returns
+     * via callback.
+     *
+     * @param postId
+     * @param callback
+     */
     @Override
-    public void getPost(@NonNull int postId, @NonNull GetPostListCallback callback) {
+    public void getPost(@NonNull final int postId, @NonNull final GetPostCallback callback) {
+        checkNotNull(postId);
+        checkNotNull(callback);
+
+        mPostRemoteDataSource.getPost(postId,new GetPostCallback() {
+            @Override
+            public void onPostLoaded(Post data) {
+                mPostLocalDataSource.setPost(data);
+                callback.onPostLoaded(data);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+
+                mPostLocalDataSource.getPost(postId, new GetPostCallback() {
+                    @Override
+                    public void onPostLoaded(Post data) {
+                        callback.onPostLoaded(data);
+                    }
+
+                    @Override
+                    public void onDataNotAvailable() {
+                        callback.onDataNotAvailable();
+                    }
+                });
+                callback.onDataNotAvailable();
+            }
+        });
+
+
+
+
+
+
 
     }
+    
 }

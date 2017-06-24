@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Demo Project</string>
+    <string name="error_no_data">Ops, no data for you.</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="transition_title">TRANS_TITLE_%d</string>
+    <string name="transition_body">TRANS_BODY_%d</string>
+    <string name="transition_layout">TRANS_LAYOUT_%d</string>
+
+    <string name="text_total_comment">Total %d comments.</string>
+
 </resources>
