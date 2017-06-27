@@ -18,7 +18,7 @@ In this project we got our data from http://jsonplaceholder.typicode.com
 
 ## Architecture 
 
-This project has Model-View-Controller architecture. The MVP pattern allows separate the presentation layer from the logic, so that everything about how the interface works is separated from how we represent it on screen. 
+This project has Model-View-Presenter architecture. The MVP pattern allows separate the presentation layer from the logic, so that everything about how the interface works is separated from how we represent it on screen. 
 
 ### Visiulation
 ![alt text](http://mksengun.com/mvp.png)
@@ -38,7 +38,7 @@ The model has business logic in this application.
 In list view firstly we ask for a data from view to presenter. Presenter requests data from repository. Repository is simply responsible for geting data. Bussiness logic starts to work from here. Repository checks for remote data, if successfully gets data from remote api, remote repository passes data to presenter and saves data to local database to use it later. If connection failes with remote server, repository goes for local source which is realm database and gets data from there. If there is no data in the database then list will be empty for the view.
 
 ### Detail
-In detail view post includes user and comment data. We already got post data from previus screen. When we go to detail screen, body and title comes with fragment transition from list. From now on we have to get other user and comment data from repository. We ask for comment data firstly, if success then we ask for user data, if success we will update the view. If one of those requests to remote server fails we dont update view with real data. 
+In detail, view post includes user and comment data. We already got post data from previous screen. When we go to detail screen, body and title comes with fragment transition from list. From now on we have to get other user and comment data from repository. We ask for comment data firstly, if success then we ask for user data, if success we will update the view. If one of those requests to remote server fails we dont update view with real data. 
 
 ### _sources_
 * http://realm.io
